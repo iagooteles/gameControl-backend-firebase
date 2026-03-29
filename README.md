@@ -1,0 +1,1 @@
+OBS: Para o firebase funcionar, é necessário pegar o arquivo json gerado por ele no projeto e colocar em /config;
