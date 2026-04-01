@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 public class FollowDTO {
     private String id;
     private String followerId;
-    private String followingId;
-    private String createdAt;
+    private String followedId;
+    private String userId;
+    private String username;
+    private String userPhoto;
 }

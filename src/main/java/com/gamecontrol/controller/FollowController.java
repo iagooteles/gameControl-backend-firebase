@@ -1,9 +1,9 @@
 package com.gamecontrol.controller;
 
-import com.gamecontrol.dto.FollowRequest;
 import com.gamecontrol.service.FollowService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/follow")
@@ -15,21 +15,19 @@ public class FollowController {
         this.followService = followService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> follow(@RequestBody FollowRequest request) {
+    @GetMapping("/{userId}/seguidores")
+    public ResponseEntity<List<String>> listarSeguidores(@PathVariable String userId) {
         try {
-            followService.follow(request.getFollowerId(), request.getFollowingId());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(followService.getSeguidores(userId));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> unfollow(@RequestBody FollowRequest request) {
+    @GetMapping("/{userId}/seguindo")
+    public ResponseEntity<List<String>> listarSeguindo(@PathVariable String userId) {
         try {
-            followService.unfollow(request.getFollowerId(), request.getFollowingId());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(followService.getSeguindo(userId));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
