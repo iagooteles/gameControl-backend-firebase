@@ -18,7 +18,9 @@ public class CreatePlaylistRequest {
     @Size(max = 500)
     private String descricao;
 
-    private String usuarioId; // Preenchido automaticamente pela Service
+    @NotBlank
+    private String usuarioId;
+
     private List<String> jogosIds = new ArrayList<>();
     private String documentId;
     private Instant syncedAt;

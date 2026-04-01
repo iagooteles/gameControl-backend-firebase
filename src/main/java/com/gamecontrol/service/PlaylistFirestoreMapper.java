@@ -19,7 +19,7 @@ final class PlaylistFirestoreMapper {
         Map<String, Object> m = new HashMap<>();
         m.put("nome", req.getNome());
         m.put("descricao", req.getDescricao());
-        m.put("usuarioId", req.getUsuarioId());
+        m.put("usuarioId", req.getUsuarioId()); // Pega o que veio no Request
         m.put("jogosIds", req.getJogosIds() != null ? req.getJogosIds() : new ArrayList<>());
         m.put("syncedAt", Timestamp.now());
         return m;
@@ -36,8 +36,6 @@ final class PlaylistFirestoreMapper {
         Object jogos = snap.get("jogosIds");
         if (jogos instanceof List<?> list) {
             dto.setJogosIds((List<String>) list);
-        } else {
-            dto.setJogosIds(new ArrayList<>());
         }
 
         Timestamp ts = snap.getTimestamp("syncedAt");
@@ -49,14 +47,10 @@ final class PlaylistFirestoreMapper {
 
     static Map<String, Object> patchMap(UsuarioPlayListDTO patch) {
         Map<String, Object> m = new HashMap<>();
-        putIfNotNull(m, "nome", patch.getNome());
-        putIfNotNull(m, "descricao", patch.getDescricao());
-        putIfNotNull(m, "jogosIds", patch.getJogosIds());
+        if (patch.getNome() != null) m.put("nome", patch.getNome());
+        if (patch.getDescricao() != null) m.put("descricao", patch.getDescricao());
+        if (patch.getJogosIds() != null) m.put("jogosIds", patch.getJogosIds());
         m.put("syncedAt", Timestamp.now());
         return m;
-    }
-
-    private static void putIfNotNull(Map<String, Object> m, String key, Object value) {
-        if (value != null) m.put(key, value);
     }
 }
